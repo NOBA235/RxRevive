@@ -1,0 +1,26 @@
+services:
+  repuragent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    # keep generated files when resume app
+    volumes:
+      - ./persistence:/home/repuragent/app/persistence
+      - ./.env:/home/repuragent/app/.env
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - repuragent-network
+
+networks:
+  repuragent-network:
+    driver: bridge
