@@ -16,3 +16,6 @@ __pycache__/
 *.db-shm
 *.db-wal
 
+# API client cache files
+.chembl_ws_client*
+
