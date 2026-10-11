@@ -1,6 +1,6 @@
 # Technical Details
 
-This chapter presents technical details under the hood of Repuragent. It provides developers with the understanding needed to customise the system. Use this section when you need to extend the system (e.g., add a new tool), audit data flows, or explain to others exactly how Repuragent handles their information. Refer back to the [Usage Guidelines](shared_usage.md) for operator-facing workflows.
+This chapter presents technical details under the hood of RxRevive-agent. It provides developers with the understanding needed to customise the system. Use this section when you need to extend the system (e.g., add a new tool), audit data flows, or explain to others exactly how RxRevive-agent handles information. Refer back to the [Usage Guidelines](shared_usage.md) for operator-facing workflows.
 
 ## 5.1 System Architecture Overview
 

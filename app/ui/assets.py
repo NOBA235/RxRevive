@@ -11,20 +11,25 @@ from app.config import APP_DESCRIPTION, APP_TITLE, DOCS_URL, GITHUB_URL, REPO_RO
 from app.partners import get_partner_organizations
 
 LOGO_PATH = "images/logo.png"
-INTRO_IMAGE_PATH = "images/agent_illustration.png"
-INTRO_IMAGE_ALT = "How Repuragent works: plan, approve, execute, report"
 
-TAGLINE = "An AI scientist for drug repurposing"
+TAGLINE = "Drug repositioning research workspace"
 
-HEADER_LINKS_HTML = (
-    "<div class='header-links-content'>"
-    f"<a class='header-link' href='{escape(GITHUB_URL, quote=True)}' target='_blank' "
-    "rel='noopener noreferrer'>GitHub</a>"
-    "<span class='header-link-divider' aria-hidden='true'>|</span>"
-    f"<a class='header-link' href='{escape(DOCS_URL, quote=True)}' target='_blank' "
-    "rel='noopener noreferrer'>User guide</a>"
-    "</div>"
-)
+def _header_links_html() -> str:
+    links = []
+    if GITHUB_URL:
+        links.append(
+            f"<a class='header-link' href='{escape(GITHUB_URL, quote=True)}' target='_blank' "
+            "rel='noopener noreferrer'>Project</a>"
+        )
+    if DOCS_URL:
+        links.append(
+            f"<a class='header-link' href='{escape(DOCS_URL, quote=True)}' target='_blank' "
+            "rel='noopener noreferrer'>Guide</a>"
+        )
+    return "<div class='header-links-content'>" + "<span class='header-link-divider' aria-hidden='true'>|</span>".join(links) + "</div>" if links else ""
+
+
+HEADER_LINKS_HTML = _header_links_html()
 
 
 @lru_cache(maxsize=32)
@@ -65,10 +70,7 @@ def title_html() -> str:
 
 
 def intro_markdown() -> str:
-    source = inline_image_src(INTRO_IMAGE_PATH)
-    if not source:
-        return APP_DESCRIPTION
-    return f"![{INTRO_IMAGE_ALT}]({source})"
+    return APP_DESCRIPTION
 
 
 def partner_logos_html() -> str:
@@ -108,7 +110,6 @@ def partner_logos_html() -> str:
 
 __all__ = [
     "HEADER_LINKS_HTML",
-    "INTRO_IMAGE_PATH",
     "LOGO_PATH",
     "TAGLINE",
     "inline_image_src",

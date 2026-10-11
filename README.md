@@ -1,124 +1,48 @@
-# Repuragent — An AI Scientist for Drug Repurposing
+# RxRevive-agent
 
-## Overview
+**Drug repositioning research workspace**
 
-Drug repurposing offers an efficient strategy to accelerate therapeutic discovery by identifying new indications for existing drugs. However, the process remains hindered by the heterogeneity of biological and chemical data and by the difficulty of forming early, evidence-based hypotheses about candidate drugs, targets, and clinical endpoints. We introduce Repuragent (Drug Repurposing Agentic System), a proof-of-concept multi-agent framework designed to autonomously plan, execute, and refine data-driven repurposing workflows under human-in-the-loop supervision. The system integrates autonomous research, data extraction, knowledge graph (KG) construction, and analytical reasoning with an adaptive long-term memory mechanism that improves the system over time.
+RxRevive-agent helps researchers explore new therapeutic hypotheses for existing compounds. It combines a human-reviewed research plan with biomedical literature search, disease-specific knowledge graphs, compound property predictions, analysis of uploaded files, and a traceable final report. It is a research support tool; its outputs require expert review.
 
-<div align="center">
-  <img src="images/agent_architecture.png" width="500">
-</div>
+## What it can do
 
-This repository is the **local, single-user application**. You can clone it and run it on your own
-machine. Every file, database and conversation history stays on your device. We also offer:
+- Propose a multi-step workflow and pause for review before longer tasks.
+- Search biomedical literature and protocol documents, then build disease-focused knowledge graphs from supported public sources.
+- Run available ADMET predictions and analyze uploaded tables with generated figures.
+- Keep task conversations, plans, and artifacts in the local persistence directory.
+- Reuse saved plans when the user enables that option.
 
-- [Repuragent Web](https://repuragent.serve.scilifelab.se): the hosted multi-user version, usable without installation. Note that an account is required, and resources are limited. Registration requests are verified and approved manually, so approval can take some time.
-- [Repuragent Web on GitHub](https://github.com/pharmbio/repuragent-web): the web version's source code
+## Run locally
 
-## Version announcement: Version 2
-
-Version 2 keeps the same core engine as Version 1 but revises the planning control mechanism and how it is presented:
-
-- **The plan is stored and updated as a file, not as prose held by the supervisor:** the supervisor writes and updates `plan.md` in the
-  conversation's output folder, so progress cannot drift from what actually happened,
-  a task can be resumed, and a follow-up can read the work log. This enforces deterministic plan monitoring.
-- **UI/UX: a persistent task monitor:** a separate block in the UI shows which step you are on while a run is still going.
-- **Context isolation:** the supervisor holds the whole conversation, and each specialist receives
-  a written brief from it. When a sub-agent finishes its job, it returns only its final message to the supervisor's context.
-- **A rebuilt SOP search:** an ensemble retriever fuses a BM25 arm and a ParentDocument
-  dense arm over the same passages. The number of SOPs has also increased from 4 to 11 documents (the full set of
-  currently available REMEDi4ALL SOPs).
-
-## System architecture
-
-### The agents
-
-- **Planning agent:** decomposes the request into an executable breakdown, using standard
-  operating procedures, literature, and precedent from earlier successful runs.
-- **Supervisor agent:** writes a task brief for each step, delegates it to the appropriate sub-agent,
-  checks what comes back, and updates `plan.md`.
-- **Research agent:** performs literature search, SOP retrieval, and disease-identifier resolution; builds
-  knowledge graphs from OpenTargets, ChEMBL, UniProt, Reactome, KEGG and GWAS
-  data; and mines those graphs for drugs, proteins, pathways and mechanisms.
-- **Prediction agent:** executes pre-trained CPSign ADMET models (CYP inhibition, hERG, Ames, P-gp, PAMPA, BBB, solubility, lipophilicity).
-- **Data agent:** inspects uploads, combines tables, scores and ranks
-  candidates, computes statistics, and generates figures.
-- **Report agent:** summarizes the full run into the final answer, tied to the evidence the run produced.
-
-### Memory
-
-- **Episodic memory:** records how successful tasks were decomposed, and retrieves them as precedent when
-  planning a similar one. Recording an episode is deliberate: press *Remember this plan*.
-- **Conversation state:** checkpointed in SQLite, so a conversation survives a restart
-  and a plan can wait at its approval gate indefinitely.
-- **SOP retrieval:** a prebuilt index over regulatory guidance and protocol documents. Add a document by dropping
-  the PDF into `persistence/data/SOP` and running `python reindex.py` there.
-
-## Quick start
-
-### Prerequisites
-- An OpenAI API key from [platform.openai.com](https://platform.openai.com/).
-- Python 3.13 (or 3.11/3.12) for native execution, OR [Docker Desktop](https://www.docker.com/products/docker-desktop/) for containerized deployment.
-- (Optional) A LangSmith account for tracing, from [smith.langchain.com](https://smith.langchain.com/).
-
-### Run on Windows (Constrained 4 GB RAM Mode — Recommended for Local PC)
-
-For Windows desktops with limited RAM (~4 GB) or without Docker, RepurAgent runs natively:
+Requirements: Python 3.11-3.13 and an API key for the configured language model provider.
 
 ```powershell
-# 1. Create and activate a virtual environment
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-
-# 2. Install dependencies
 pip install -r requirements.txt
-
-# 3. Configure environment
 Copy-Item .env.example .env
-# Edit .env to set your OPENAI_API_KEY and LOCAL_CONSTRAINED_MODE=true
-
-# 4. Start the application
+# Add your provider key to .env
 python main.py
 ```
-Open [http://localhost:7860](http://localhost:7860). See [CONSTRAINED_MODE.md](CONSTRAINED_MODE.md) for full architectural and resource details.
 
-### Run with Docker (Original Full Profile)
+Open http://localhost:7860. Set `LOCAL_CONSTRAINED_MODE=true` in `.env` for the resource-limited local profile described in [CONSTRAINED_MODE.md](CONSTRAINED_MODE.md).
 
-```bash
-git clone https://github.com/pharmbio/repuragent.git
-cd repuragent
-cp .env.example .env        # then put your OPENAI_API_KEY in it
-docker compose up --build
-```
+For container deployment, use `docker compose up --build`. Persistent data stays under `persistence/`.
 
-Open [http://localhost:7860](http://localhost:7860).
+## Project map
 
-Everything the app persists (the database, your conversations, uploads, results, the
-SOP corpus and its index) lives under `persistence/`, which is the single directory
-`docker-compose.yml` mounts. Running `docker compose down` and then `up` again picks up exactly where
-you left off.
+- `app/` - interface, conversations, run lifecycle, downloads
+- `core/` - agent graph, prompts, and tools
+- `backend/` - database, document retrieval, execution support, and data clients
+- `persistence/` - local conversations, uploads, indexes, and results
+- `models/` - included predictive model artifacts
+- `docs/` - operating and technical guides
 
-### Daily use
+## Project lineage and acknowledgments
 
-```bash
-docker compose up          # start
-docker compose down        # stop
-```
+RxRevive-agent is a customized fork of [Repuragent](https://github.com/pharmbio/repuragent), the open-source drug-repurposing agent project. The workflow and scientific capabilities build on that project; this rebrand does not claim the upstream work as original. See [acknowledgments](docs/acknowledgement.md) for scientific tools, datasets, and protocol sources, and preserve applicable upstream license terms when redistributing this code.
 
-## Project structure
-
-```
-repuragent/
-├── app/           Gradio UI, the run loop, conversations, downloads
-├── core/          the agent graph (core/agents/), prompts, and every agent-facing tool (core/tools/)
-├── backend/       the database, the SOP retrieval system, the sandbox, domain API clients
-├── persistence/   everything that survives a restart: your conversations, the database,
-│                  uploads, results, the SOP corpus and its prebuilt index
-├── models/        pre-trained CPSign ADMET models
-├── docs/          technical documents
-└── main.py        entry point
-```
-
-## Cite 
+The upstream project describes its research in this preprint:
 
 ```bibtex
 @article{huynh2026,
@@ -127,7 +51,6 @@ repuragent/
   journal = {bioRxiv},
   year    = {2026},
   doi     = {10.64898/2026.04.20.719538},
-  url     = {https://www.biorxiv.org/content/10.64898/2026.04.20.719538v2},
-  note    = {Preprint, version 2}
+  url     = {https://www.biorxiv.org/content/10.64898/2026.04.20.719538v2}
 }
 ```

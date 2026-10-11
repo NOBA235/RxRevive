@@ -68,18 +68,18 @@ logging.basicConfig(
     level=os.environ.get("LOG_LEVEL", "INFO").upper(),
     format="%(asctime)s %(levelname)s %(name)s - %(message)s",
 )
-logger = logging.getLogger("repuragent")
+logger = logging.getLogger("rxrevive_agent")
 
 # --- Identity -----------------------------------------------------------------
 
-APP_TITLE = os.environ.get("APP_TITLE", "Repuragent")
+APP_TITLE = os.environ.get("APP_TITLE", "RxRevive-agent")
 APP_DESCRIPTION = os.environ.get(
     "APP_DESCRIPTION",
-    "An AI scientist for drug repurposing: plans a workflow, waits for your "
-    "approval, then executes it across literature, knowledge graphs and ADMET models.",
+    "A research workspace for exploring drug repositioning hypotheses with literature, "
+    "knowledge graphs, uploaded data and ADMET predictions.",
 )
-GITHUB_URL = os.environ.get("GITHUB_URL", "https://github.com/pharmbio/repuragent")
-DOCS_URL = os.environ.get("DOCS_URL", "https://repuragent.readthedocs.io/")
+GITHUB_URL = os.environ.get("GITHUB_URL", "")
+DOCS_URL = os.environ.get("DOCS_URL", "")
 
 # --- Credentials --------------------------------------------------------------
 

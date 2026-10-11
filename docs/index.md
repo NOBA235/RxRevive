@@ -1,26 +1,24 @@
-# Repuragent - AI Scientist for Drug Repurposing
+# RxRevive-agent - Drug Repositioning Research Workspace
 
-Repuragent is an Agentic AI system for Drug Repurposing delivered in two versions—a
-self-hosted local build and a public web-app build. This guide treats both versions as one
-product line so you can understand what stays the same, what differs, and how to choose the
-suitable version for your usage.
+RxRevive-agent is a local workspace for exploring drug repositioning hypotheses with researcher oversight. It supports literature review, knowledge graph analysis, ADMET predictions, data exploration, and report generation.
 
-- **GitHub for local app:** [github.com/pharmbio/repuragent](https://github.com/pharmbio/repuragent)
-- **Web-app version:** [repuragent.serve.scilifelab.se](https://repuragent.serve.scilifelab.se)
+This customized project builds on [Repuragent](https://github.com/pharmbio/repuragent). See [Acknowledgments](acknowledgement.md) for source credit and scientific resources.
 
-## How to Use This Guide
+## Guide
 
-1. **Start with the Overview** – learn Repuragent’s general features and how the versions compare.
-2. **Follow the version-specific guide** – pick the local or web guidelines that match your preferred usage.
-3. **Usage Guidelines focus** – local and web apps differ when initializing the app. After that, the usages are the same and presented in [Usage Guidelines](shared_usage.md).
-4. **Contact and Support** – reference them whenever you customize, scale, or debug the Repuragent.
+- [Overview](overview.md) - capabilities and workflow
+- [Local setup](local.md) - install and run the application
+- [Usage guidelines](shared_usage.md) - work with tasks and outputs
+- [Technical details](technical.md) - architecture and data handling
+- [Acknowledgments](acknowledgement.md) - upstream project and scientific sources
+- [Support](contact.md) - where to report issues
 
 ```{toctree}
 :maxdepth: 2
+:hidden:
 
 overview
 local
-web
 shared_usage
 technical
 acknowledgement

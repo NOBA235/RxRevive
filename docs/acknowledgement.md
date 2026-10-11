@@ -1,6 +1,6 @@
 # Acknowledgement
 
-Repuragent relies on several open-source scientific tools, data, and guidelines. This page summarizes these resources and links to the original sources for proper acknowledgment.
+RxRevive-agent builds on the upstream [Repuragent project](https://github.com/pharmbio/repuragent) and relies on open-source scientific tools, data, and guidelines. This page summarizes these resources and links to the original sources for proper acknowledgment.
 
 
 ## REMEDI4ALL Standard Operating Procedures

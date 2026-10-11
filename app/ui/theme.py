@@ -1,6 +1,6 @@
 '''Palette and stylesheet.
 
-The brand colours are Repuragent's fern green. The structure is built around the
+RxRevive-agent uses a blue and slate palette. The structure is built around the
 three tiers a run produces — the plan under review, quiet working narration, and the
 deliverable as a document — because rendering them identically made the answer as
 hard to find as a stray tool call.
@@ -14,43 +14,43 @@ from __future__ import annotations
 import gradio as gr
 from gradio.themes.utils import colors
 
-PRIMARY_FERN = colors.Color(
-    c50="#dbeee5",
-    c100="#cfe3d9",
-    c200="#bad4c7",
-    c300="#9fc3b2",
-    c400="#78a78f",
-    c500="#3f7f6e",
-    c600="#1f5c55",
-    c700="#184842",
-    c800="#10322d",
-    c900="#0a211f",
-    c950="#05110f",
-    name="repuragent_primary_green",
+PRIMARY_BLUE = colors.Color(
+    c50="#e8efff",
+    c100="#d6e2ff",
+    c200="#b8ccff",
+    c300="#91adfa",
+    c400="#6b8bed",
+    c500="#496bd9",
+    c600="#3155bc",
+    c700="#29469a",
+    c800="#233b7c",
+    c900="#1e3265",
+    c950="#121d3d",
+    name="rxrevive_primary_blue",
 )
 
-SECONDARY_SAGE = colors.Color(
-    c50="#edf6f2",
-    c100="#dfeee6",
-    c200="#c8dfd3",
-    c300="#b2d1c0",
-    c400="#95bfa9",
-    c500="#79ad92",
-    c600="#5e967c",
-    c700="#4b7761",
-    c800="#365646",
-    c900="#233a2f",
-    c950="#142019",
-    name="repuragent_secondary_green",
+SECONDARY_SLATE = colors.Color(
+    c50="#eef2f8",
+    c100="#dfe6f1",
+    c200="#c6d1e2",
+    c300="#a9bad2",
+    c400="#879dbd",
+    c500="#687f9f",
+    c600="#526783",
+    c700="#43546b",
+    c800="#354253",
+    c900="#283342",
+    c950="#181f29",
+    name="rxrevive_secondary_slate",
 )
 
-REPURAGENT_THEME = gr.themes.Default(
-    primary_hue=PRIMARY_FERN,
-    secondary_hue=SECONDARY_SAGE,
+RXREVIVE_THEME = gr.themes.Default(
+    primary_hue=PRIMARY_BLUE,
+    secondary_hue=SECONDARY_SLATE,
     neutral_hue=colors.gray,
 ).set(
     color_accent="*primary_600",
-    color_accent_soft="#dbeee5",
+    color_accent_soft="#e8efff",
     color_accent_soft_dark="*primary_700",
     button_primary_background_fill="*primary_600",
     button_primary_background_fill_hover="*primary_500",
@@ -83,18 +83,18 @@ APP_CSS = """
         --lh-ui: 1.5;       /* compact UI text             */
         --lh-copy: 1.6;     /* short paragraphs in a card  */
         --lh-body: 1.7;     /* the reading tier            */
-        --page-bg: #f7f9f8;
+        --page-bg: #f5f7fb;
         --surface-bg: #ffffff;
-        --surface-muted: #fbfcfb;
-        --surface-tint: #f1f6f3;
+        --surface-muted: #f9faff;
+        --surface-tint: #edf2fb;
         --field-bg: #ffffff;
-        --text-main: #16211d;
-        --text-soft: #5c6b64;
-        --border-subtle: #d8e2dc;
-        --border-strong: #b9c9c1;
-        --brand: #1f5c55;
-        --brand-strong: #184842;
-        --brand-soft: #dbeee5;
+        --text-main: #192334;
+        --text-soft: #5d6879;
+        --border-subtle: #dce3ee;
+        --border-strong: #b7c3d5;
+        --brand: #3155bc;
+        --brand-strong: #29469a;
+        --brand-soft: #e8efff;
         --focus-color: #f0b429;
         --ok-color: #2f8f4e;
         --error-color: #b3382b;
@@ -647,7 +647,7 @@ APP_CSS = """
     }
     .approval-panel__icon { font-size: var(--fs-lead); }
     .approval-panel__message { font-family: var(--font-ui); font-size: var(--fs-ui); line-height: var(--lh-copy); margin-top: 0.4rem; }
-    .approval-panel__hint { font-family: var(--font-ui); font-size: var(--fs-ui-sm); line-height: var(--lh-ui); color: #3c554d; margin-top: 0.45rem; }
+    .approval-panel__hint { font-family: var(--font-ui); font-size: var(--fs-ui-sm); line-height: var(--lh-ui); color: #3e4f6b; margin-top: 0.45rem; }
     #approval-actions-row { gap: 0.6rem; margin: 0.6rem 0 0; }
 
     /* ---- Sidebar conversations -------------------------------------------- */
@@ -730,4 +730,4 @@ APP_CSS = """
     }
     """
 
-__all__ = ["APP_CSS", "PRIMARY_FERN", "REPURAGENT_THEME", "SECONDARY_SAGE"]
+__all__ = ["APP_CSS", "PRIMARY_BLUE", "RXREVIVE_THEME", "SECONDARY_SLATE"]

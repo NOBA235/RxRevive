@@ -1,4 +1,4 @@
-"""Sphinx configuration for the Repuragent documentation."""
+"""Sphinx configuration for the RxRevive-agent documentation."""
 
 from __future__ import annotations
 
@@ -13,8 +13,8 @@ REPO_ROOT = DOCS_DIR.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 # -- Project information -----------------------------------------------------
-project = "Repuragent"
-author = "Repuragent Team"
+project = "RxRevive-agent"
+author = "RxRevive-agent contributors"
 copyright = f"{datetime.now():%Y}, {author}"
 version = ""
 release = ""

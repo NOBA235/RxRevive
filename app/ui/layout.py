@@ -36,17 +36,16 @@ from app.ui.assets import (
     HEADER_LINKS_HTML,
     intro_markdown,
     logo_html,
-    partner_logos_html,
     title_html,
 )
 from app.ui.scripts import CONVERSATION_SCRIPT
-from app.ui.theme import APP_CSS, REPURAGENT_THEME
+from app.ui.theme import APP_CSS, RXREVIVE_THEME
 
 
 def build_demo() -> gr.Blocks:
     with gr.Blocks(
         title=APP_TITLE,
-        theme=REPURAGENT_THEME,
+        theme=RXREVIVE_THEME,
         css=APP_CSS,
         head=CONVERSATION_SCRIPT,
     ) as demo:
@@ -62,10 +61,6 @@ def build_demo() -> gr.Blocks:
                 gr.HTML(title_html(), elem_id="app-title")
             with gr.Column(scale=0, min_width=240, elem_id="header-links-column"):
                 gr.HTML(HEADER_LINKS_HTML, elem_id="header-links")
-
-        partner_panel = partner_logos_html()
-        if partner_panel:
-            gr.HTML(partner_panel, elem_id="partner-logos-panel")
 
         with gr.Row(elem_id="layout-row"):
             # --- Sidebar ----------------------------------------------------
@@ -85,7 +80,7 @@ def build_demo() -> gr.Blocks:
                     value=FILE_LIST_REFRESH_INTERVAL_SECONDS, active=True, render=False
                 )
                 file_upload = gr.File(
-                    label="Upload data",
+                    label="Add research files",
                     file_count="multiple",
                     file_types=["file"],
                     elem_id="file-upload-panel",
@@ -94,12 +89,12 @@ def build_demo() -> gr.Blocks:
 
                 with gr.Column(elem_id="learning-controls"):
                     use_learning = gr.Checkbox(
-                        label="Plan from past tasks",
+                        label="Use previous research plans",
                         value=True,
-                        info="Give the planner precedent from earlier successful runs.",
+                        info="Use saved plans as a starting point for related research.",
                     )
                     extract_btn = gr.Button(
-                        "Remember this plan", elem_id="extract-learning-button"
+                        "Save this plan for later", elem_id="extract-learning-button"
                     )
                     learning_status = gr.Markdown(value="", elem_id="learning-status")
 
@@ -107,7 +102,7 @@ def build_demo() -> gr.Blocks:
             with gr.Column(scale=4, elem_id="conversation-column"):
                 gr.Markdown(intro_markdown(), elem_id="intro-text")
                 chatbot = gr.Chatbot(
-                    label="Conversation", height=560, type="messages", elem_id="chatbot-panel"
+                    label="Research workspace", height=560, type="messages", elem_id="chatbot-panel"
                 )
 
                 # The live plan. Directly under the transcript because "which step
@@ -133,9 +128,9 @@ def build_demo() -> gr.Blocks:
                     )
 
                 user_input = gr.Textbox(
-                    label="Your request",
+                    label="Research question",
                     lines=3,
-                    placeholder="e.g. Find repurposing candidates for acute myeloid leukemia and rank them by hERG risk",
+                    placeholder="e.g. Explore repositioning candidates for acute myeloid leukemia and compare their hERG risk",
                     elem_id="user-input",
                 )
                 with gr.Row(elem_id="input-actions-row"):

@@ -608,7 +608,7 @@ this question, and you should not pretend otherwise.
 
 # WHAT THIS SYSTEM IS
 
-Repuragent is a multi-agent system for drug repurposing. A planning agent proposes a
+RxRevive-agent is a multi-agent research workspace for drug repositioning. A planning agent proposes a
 workflow, **the user approves it**, and a supervisor then executes it by delegating to three
 specialists:
 
